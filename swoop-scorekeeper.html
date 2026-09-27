@@ -203,6 +203,7 @@
   }
 
   input[type="number"],
+  input[type="tel"],
   input[type="text"],
   select {
     font: inherit;
@@ -214,7 +215,7 @@
     width: 100%;
   }
 
-  input[type="number"] { max-width: 110px; }
+  input[type="number"], input[type="tel"] { max-width: 110px; }
 
   .name-list {
     display: flex;
@@ -701,7 +702,7 @@
       <div class="card-panel">
         <div class="field-group">
           <label class="field-label" for="input-player-count">How many players?</label>
-          <input type="number" id="input-player-count" min="2" max="12" value="4">
+          <input type="tel" inputmode="numeric" pattern="[0-9]*" id="input-player-count" value="4">
           <div class="hint">3–8 players use two decks; 6–12 use three (or more).</div>
         </div>
 
@@ -741,11 +742,11 @@
             </label>
           </div>
           <div class="target-input-wrap" id="target-input-wrap" style="display:none;">
-            <input type="number" id="input-target" min="1" step="5" placeholder="e.g. 400">
+            <input type="tel" inputmode="numeric" pattern="[0-9]*" id="input-target" placeholder="e.g. 400">
             <span class="hint" id="target-hint"></span>
           </div>
           <div class="target-input-wrap" id="rounds-input-wrap" style="display:none;">
-            <input type="number" id="input-rounds" min="1" step="1" placeholder="e.g. 8">
+            <input type="tel" inputmode="numeric" pattern="[0-9]*" id="input-rounds" placeholder="e.g. 8">
             <span class="hint">How many rounds to play</span>
           </div>
         </div>
@@ -1215,7 +1216,7 @@
         } else {
           var val = existing ? existing.scores[i] : "";
           row.innerHTML = '<span class="pname">' + escapeHtml(name) + '</span>' +
-            '<input type="number" min="0" step="5" inputmode="numeric" autocomplete="off" ' +
+            '<input type="tel" inputmode="numeric" pattern="[0-9]*" autocomplete="off" ' +
             'name="score-r' + roundIndex + '-p' + i + '" class="score-field" data-idx="' + i + '" value="' + (val === undefined ? "" : val) + '" placeholder="0">';
         }
         scoreInputsWrap.appendChild(row);
