@@ -484,7 +484,7 @@
   }
 
   .entry-panel h2 {
-    margin: 0 0 4px;
+    margin: 0 0 18px;
     font-size: 1.05rem;
     font-family: "Libre Franklin", sans-serif;
     font-weight: 800;
@@ -504,15 +504,21 @@
   }
 
   .out-pill {
-    padding: 8px 14px;
+    padding: 10px 18px;
     border-radius: 999px;
     border: 1px solid var(--line);
     background: var(--panel-soft);
     color: var(--ink);
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
   }
+
+  .out-picker.needs-choice .out-pill:not(.selected) {
+    border: 1.5px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+
+  .out-pill.selected::before { content: "\2713\00a0"; }
 
   .out-pill.selected {
     background: var(--accent);
@@ -533,6 +539,45 @@
     justify-content: space-between;
     gap: 10px;
   }
+
+  .entry-step { margin-bottom: 22px; }
+  .entry-step .out-picker,
+  .entry-step .score-inputs { margin-bottom: 0; }
+
+  .step-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .step-num {
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--felt);
+    color: var(--accent-ink);
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step-title { font-weight: 700; font-size: 1.05rem; }
+  .step-detail { font-size: 0.82rem; color: var(--ink-soft); margin-top: 2px; }
+
+  .score-inputs.is-locked { opacity: 0.4; pointer-events: none; }
+
+  .score-input-row.winner-row {
+    background: var(--gold-bg);
+    border: 1px solid var(--gold-line);
+    border-radius: 10px;
+    padding: 12px;
+  }
+
+  .winner-pts { font-weight: 600; font-size: 0.92rem; font-variant-numeric: tabular-nums; }
 
   .score-input-row .pname { font-weight: 600; font-size: 0.92rem; }
   .score-input-row .pname.out-label { color: var(--ink-faint); font-weight: 400; font-style: italic; }
@@ -875,9 +920,10 @@
 
   // ---------- derived state ----------
 
-  function runningTotals() {
+  function runningTotals(rounds) {
+    rounds = rounds || state.rounds;
     var totals = state.players.map(function () { return 0; });
-    state.rounds.forEach(function (r) {
+    rounds.forEach(function (r) {
       r.scores.forEach(function (s, i) { totals[i] += s; });
     });
     return totals;
@@ -888,15 +934,16 @@
     return (state.starterIndex + state.rounds.length) % n;
   }
 
-  function isGameOver() {
-    if (state.rounds.length === 0) return false;
+  function isGameOver(rounds) {
+    rounds = rounds || state.rounds;
+    if (rounds.length === 0) return false;
     if (state.endMode === "once") {
-      return state.rounds.length >= state.players.length;
+      return rounds.length >= state.players.length;
     }
     if (state.endMode === "rounds") {
-      return state.rounds.length >= state.totalRounds;
+      return rounds.length >= state.totalRounds;
     }
-    var totals = runningTotals();
+    var totals = runningTotals(rounds);
     return totals.some(function (t) { return t >= state.targetScore; });
   }
 
@@ -1182,12 +1229,31 @@
 
     var heading = document.createElement("h2");
     heading.textContent = editingRoundIndex !== null ? ("Edit Round " + (roundIndex + 1)) : ("Round " + (roundIndex + 1) + ": Enter Scores");
-    var sub = document.createElement("div");
-    sub.className = "sub";
-    sub.textContent = "Tap the player who went out (they score 0), then enter everyone else's remaining card points.";
+    function makeStepHeader(number, title, detail) {
+      var el = document.createElement("div");
+      el.className = "step-header";
+      var num = document.createElement("span");
+      num.className = "step-num";
+      num.textContent = number;
+      var text = document.createElement("div");
+      var titleEl = document.createElement("div");
+      titleEl.className = "step-title";
+      titleEl.textContent = title;
+      var detailEl = document.createElement("div");
+      detailEl.className = "step-detail";
+      detailEl.textContent = detail;
+      text.appendChild(titleEl);
+      text.appendChild(detailEl);
+      el.appendChild(num);
+      el.appendChild(text);
+      return { el: el, detail: detailEl };
+    }
+
+    var step1Header = makeStepHeader(1, "Who won the round?", "Tap the first player to go out. They score 0 this round.");
+    var step2Header = makeStepHeader(2, "Enter everyone else's points", "");
 
     var outPicker = document.createElement("div");
-    outPicker.className = "out-picker";
+    outPicker.className = "out-picker" + (selectedOut === null ? " needs-choice" : "");
     state.players.forEach(function (name, i) {
       var pill = document.createElement("button");
       pill.type = "button";
@@ -1196,9 +1262,11 @@
       pill.setAttribute("data-idx", i);
       pill.addEventListener("click", function () {
         selectedOut = i;
+        outPicker.classList.remove("needs-choice");
         Array.prototype.forEach.call(outPicker.querySelectorAll(".out-pill"), function (p) {
           p.classList.toggle("selected", parseInt(p.getAttribute("data-idx"), 10) === i);
         });
+        errorEl.textContent = "";
         renderScoreInputs();
       });
       outPicker.appendChild(pill);
@@ -1207,37 +1275,71 @@
     var scoreInputsWrap = document.createElement("div");
     scoreInputsWrap.className = "score-inputs";
 
+    var errorEl = document.createElement("div");
+    errorEl.className = "error-text";
+
+    var submitBtn = null;
+
+    // True when adding the scores typed so far would end the game (live check for target-score games).
+    function endsGame() {
+      if (editingRoundIndex !== null) return false;
+      var scores = state.players.map(function (_, i) {
+        if (i === selectedOut) return 0;
+        var field = scoreInputsWrap.querySelector('.score-field[data-idx="' + i + '"]');
+        var v = field ? parseInt(field.value, 10) : 0;
+        return isNaN(v) || v < 0 ? 0 : v;
+      });
+      var preview = state.rounds.concat([{ wentOutIndex: selectedOut === null ? 0 : selectedOut, scores: scores }]);
+      return isGameOver(preview);
+    }
+
+    function updateSubmitLabel() {
+      if (!submitBtn) return;
+      if (editingRoundIndex !== null) {
+        submitBtn.textContent = "Save Round";
+      } else {
+        submitBtn.textContent = endsGame() ? "See Game Results" : "Next Round";
+      }
+    }
+
     function renderScoreInputs() {
+      var locked = selectedOut === null;
+      scoreInputsWrap.classList.toggle("is-locked", locked);
+      step2Header.detail.textContent = locked
+        ? "Choose the round winner first."
+        : "Total the points on the cards each player has left.";
       scoreInputsWrap.innerHTML = "";
       state.players.forEach(function (name, i) {
         var row = document.createElement("div");
         row.className = "score-input-row";
         if (i === selectedOut) {
-          row.innerHTML = '<span class="pname out-label">' + escapeHtml(name) + ' — out (0 pts)</span>';
+          row.className += " winner-row";
+          row.innerHTML = '<span class="pname">&#127942; ' + escapeHtml(name) + ' won the round</span>' +
+            '<span class="winner-pts">0 pts</span>';
         } else {
           var val = existing ? existing.scores[i] : "";
           row.innerHTML = '<span class="pname">' + escapeHtml(name) + '</span>' +
             '<input type="tel" inputmode="numeric" pattern="[0-9]*" autocomplete="off" ' +
-            'name="score-r' + roundIndex + '-p' + i + '" class="score-field" data-idx="' + i + '" value="' + (val === undefined ? "" : val) + '" placeholder="0">';
+            'name="score-r' + roundIndex + '-p' + i + '" class="score-field" data-idx="' + i + '" value="' + (val === undefined ? "" : val) + '" placeholder="0"' +
+            (locked ? " disabled" : "") + '>';
+          row.querySelector("input").addEventListener("input", updateSubmitLabel);
         }
         scoreInputsWrap.appendChild(row);
       });
+      updateSubmitLabel();
     }
     renderScoreInputs();
-
-    var errorEl = document.createElement("div");
-    errorEl.className = "error-text";
 
     var actions = document.createElement("div");
     actions.className = "entry-actions";
 
-    var submitBtn = document.createElement("button");
+    submitBtn = document.createElement("button");
     submitBtn.className = "btn primary";
-    submitBtn.textContent = editingRoundIndex !== null ? "Save Round" : "Add Round";
+    updateSubmitLabel();
 
     submitBtn.addEventListener("click", function () {
       if (selectedOut === null || selectedOut === undefined) {
-        errorEl.textContent = "Select who went out this round.";
+        errorEl.textContent = "Tap the player who won the round first.";
         return;
       }
       var scores = state.players.map(function () { return 0; });
@@ -1276,10 +1378,19 @@
       actions.appendChild(cancelBtn);
     }
 
+    var step1 = document.createElement("div");
+    step1.className = "entry-step";
+    step1.appendChild(step1Header.el);
+    step1.appendChild(outPicker);
+
+    var step2 = document.createElement("div");
+    step2.className = "entry-step";
+    step2.appendChild(step2Header.el);
+    step2.appendChild(scoreInputsWrap);
+
     wrap.appendChild(heading);
-    wrap.appendChild(sub);
-    wrap.appendChild(outPicker);
-    wrap.appendChild(scoreInputsWrap);
+    wrap.appendChild(step1);
+    wrap.appendChild(step2);
     wrap.appendChild(errorEl);
     wrap.appendChild(actions);
 
