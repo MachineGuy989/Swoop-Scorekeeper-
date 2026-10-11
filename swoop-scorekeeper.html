@@ -762,6 +762,14 @@
     line-height: 1;
   }
 
+  .felt-actions .guide-q {
+    width: 38px;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 50%;
+    font-weight: 800;
+  }
+
   #screen-guide { background: var(--bg); }
 
   .guide-top {
@@ -1014,14 +1022,14 @@
 <p>Everything begins on the home screen. Fill in the form from top to bottom, then tap Start Game.</p>
 <figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-01-setup-top.jpg" alt="The top of the home screen" loading="lazy"><figcaption>The top of the home screen</figcaption></div><ol class="guide-callouts"><li>Player History: opens the win and loss record for everyone who has finished a game (see &quot;Player History&quot; below).</li><li>How many players? Use the minus and plus buttons to choose from 2 to 12 players.</li><li>Player names: type one name per seat, in seating order going clockwise around the table. Each name is capitalized for you.</li></ol></figure>
 <ul class="guide-list"><li>Every player needs a name, and no two names can be the same.</li><li>Spell each person&#x27;s name the same way every game. Player History matches people by name (capital letters don&#x27;t matter).</li></ul>
-<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-02-setup-bottom.jpg" alt="The bottom of the home screen" loading="lazy"><figcaption>The bottom of the home screen</figcaption></div><ol class="guide-callouts"><li>Who starts the first round? Pick the player who drew the lowest card. If you haven&#x27;t drawn yet, leave it for now. You can change it on the game screen before round 1.</li><li>How does the game end? Choose one of three ways (explained below).</li><li>Start Game: begins the game. If something is missing you&#x27;ll see a red message telling you what to fix.</li><li>How to use this app: opens this guide at any time.</li></ol></figure>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-02-setup-bottom.jpg" alt="The bottom of the home screen" loading="lazy"><figcaption>The bottom of the home screen</figcaption></div><ol class="guide-callouts"><li>Who starts the first round? Pick the player who drew the lowest card. If you haven&#x27;t drawn yet, leave it for now. You can change it on the game screen before round 1.</li><li>How does the game end? Choose one of three ways (explained below).</li><li>Start Game: begins the game. If something is missing you&#x27;ll see a red message telling you what to fix.</li><li>How to use this app: opens this guide. Once a game is running, the small ? button at the top of the game screen opens it too.</li></ol></figure>
 <p>The three ways a game can end:</p>
 <ul class="guide-list"><li>Once Around the Table: the game is over after every player has started one round. A 4-player game lasts 4 rounds.</li><li>Predetermined Score: you choose a target. The game ends at the end of the round in which any player&#x27;s total reaches it.</li><li>Fixed Number of Rounds: you choose how many rounds to play, and the game ends after that many, no matter the scores.</li></ul>
 <figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-03-setup-target.jpg" alt="Choosing Predetermined Score" loading="lazy"><figcaption>Choosing Predetermined Score</figcaption></div><ol class="guide-callouts"><li>Tap Predetermined Score. (Fixed Number of Rounds works the same way, with a box for how many rounds to play.)</li><li>Type your target in the box that appears. The app suggests a range based on the number of players: 350 to 500 points for 3 to 5 players, 250 to 350 points for 6 or more.</li></ol></figure>
 </section>
 <section class="guide-section" id="guide-screen"><h2 class="display">Step 2: The game screen</h2>
 <p>After you tap Start Game you arrive at the game screen. This is where you will spend the whole game.</p>
-<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-04-game-start.jpg" alt="The game screen at the start of round 1" loading="lazy"><figcaption>The game screen at the start of round 1</figcaption></div><ol class="guide-callouts"><li>The title shows which round you are on. When the game ends it changes to Game Over.</li><li>History opens the Player History table. New Game ends the current game and returns to the home screen.</li><li>Progress chip: shows how far along the game is, such as &quot;Once Around: 0 / 4 rounds&quot;, &quot;Round 2 / 8&quot; or &quot;Target 100 pts&quot;.</li><li>Who starts: shows who starts the round. Before the first round has been entered you can tap it to move to the next player, until it matches who really drew the lowest card.</li><li>The scoreboard: one column for each player, with a Total row at the bottom. It fills in as rounds are entered.</li><li>The entry panel: this is where you record each round (next step).</li></ol></figure>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-04-game-start.jpg" alt="The game screen at the start of round 1" loading="lazy"><figcaption>The game screen at the start of round 1</figcaption></div><ol class="guide-callouts"><li>The title shows which round you are on. When the game ends it changes to Game Over.</li><li>The ? button opens this guide, History opens the Player History table, and New Game ends the current game and returns to the home screen.</li><li>Progress chip: shows how far along the game is, such as &quot;Once Around: 0 / 4 rounds&quot;, &quot;Round 2 / 8&quot; or &quot;Target 100 pts&quot;.</li><li>Who starts: shows who starts the round. Before the first round has been entered you can tap it to move to the next player, until it matches who really drew the lowest card.</li><li>The scoreboard: one column for each player, with a Total row at the bottom. It fills in as rounds are entered.</li><li>The entry panel: this is where you record each round (next step).</li></ol></figure>
 </section>
 <section class="guide-section" id="guide-round"><h2 class="display">Step 3: Play a round and enter the scores</h2>
 <p>Play the round of SWOOP as usual. When someone goes out, the round is over. Recording it takes two quick steps.</p>
@@ -1073,6 +1081,7 @@
       <div class="felt-top-row">
         <div class="felt-title display" id="game-round-label">Round 1</div>
         <div class="felt-actions">
+          <button class="btn secondary guide-q" id="btn-open-guide-game" aria-label="How to use this app" style="color:#F3F1E6;border-color:rgba(255,255,255,0.35);">?</button>
           <button class="btn secondary" id="btn-view-history-game" style="color:#F3F1E6;border-color:rgba(255,255,255,0.35);">History</button>
           <button class="btn secondary" id="btn-new-game" style="color:#F3F1E6;border-color:rgba(255,255,255,0.35);">New Game</button>
         </div>
@@ -1358,14 +1367,21 @@
   }
 
   // GUIDE-JS:START
-  document.getElementById("btn-open-guide").addEventListener("click", function () {
+  var guideReturnScreen = "setup";
+  var guideReturnScroll = 0;
+
+  function openGuide(from) {
+    guideReturnScreen = from;
+    guideReturnScroll = window.scrollY;
     showScreen("guide");
     window.scrollTo(0, 0);
-  });
+  }
+  document.getElementById("btn-open-guide").addEventListener("click", function () { openGuide("setup"); });
+  document.getElementById("btn-open-guide-game").addEventListener("click", function () { openGuide("game"); });
 
   function closeGuide() {
-    showScreen("setup");
-    window.scrollTo(0, 0);
+    showScreen(guideReturnScreen);
+    window.scrollTo(0, guideReturnScroll);
   }
   document.getElementById("btn-close-guide").addEventListener("click", closeGuide);
   document.getElementById("btn-close-guide-bottom").addEventListener("click", closeGuide);
