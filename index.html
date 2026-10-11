@@ -732,6 +732,188 @@
   @media (min-width: 560px) {
     .entry-actions { flex-direction: row; }
   }
+/* GUIDE-CSS:START */
+  .guide-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1.5px solid color-mix(in srgb, var(--felt) 50%, transparent);
+    background: var(--panel);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .guide-button .q {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+
+  #screen-guide { background: var(--bg); }
+
+  .guide-top {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .guide-top h1 { margin: 0; font-size: 1.15rem; font-weight: 800; }
+
+  .guide-done {
+    background: none;
+    border: none;
+    padding: 6px 4px;
+    color: var(--accent);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .guide-body {
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 22px 16px 70px;
+  }
+
+  .guide-contents {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .guide-contents .field-label { margin-bottom: 8px; }
+
+  .guide-contents a {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .guide-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-margin-top: 76px;
+  }
+
+  .guide-section h2 {
+    margin: 0;
+    font-size: 2rem;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .guide-section p { margin: 0; line-height: 1.55; }
+
+  .guide-list { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; line-height: 1.5; }
+  .guide-list li::marker { color: var(--accent); }
+
+  .guide-tip {
+    display: flex;
+    gap: 10px;
+    padding: 14px;
+    border-radius: 10px;
+    background: var(--gold-bg);
+    border: 1px solid var(--gold-line);
+    line-height: 1.5;
+  }
+
+  .guide-figure {
+    margin: 0;
+    padding: 16px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: grid;
+    gap: 18px;
+  }
+
+  .guide-shot { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+
+  .guide-shot img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+  }
+
+  .guide-shot figcaption { font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); text-align: center; }
+
+  .guide-callouts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: callout;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .guide-callouts li {
+    counter-increment: callout;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    line-height: 1.5;
+    font-size: 0.95rem;
+  }
+
+  .guide-callouts li::before {
+    content: counter(callout);
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  @media (min-width: 680px) {
+    .guide-figure { grid-template-columns: 300px 1fr; align-items: start; }
+  }
+  /* GUIDE-CSS:END */
 </style>
 
 <div id="app">
@@ -801,8 +983,89 @@
 
         <button class="btn" id="btn-start-game" style="margin-top:6px;">Start Game</button>
       </div>
+
+      <button type="button" class="guide-button" id="btn-open-guide"><span class="q" aria-hidden="true">?</span><span>How to use this app</span></button>
     </div>
   </section>
+
+<!-- GUIDE:START -->
+  <section id="screen-guide" class="screen">
+    <div class="guide-top">
+      <h1>How to use this app</h1>
+      <button type="button" class="guide-done" id="btn-close-guide">Done</button>
+    </div>
+    <div class="guide-body">
+      <nav class="guide-contents" aria-label="Guide contents">
+        <div class="field-label">In this guide</div>
+        <a href="#guide-welcome" data-guide-target="guide-welcome"><span>What this app does</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-scoring" data-guide-target="guide-scoring"><span>How scoring works</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-start" data-guide-target="guide-start"><span>Step 1: Start a game</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-screen" data-guide-target="guide-screen"><span>Step 2: The game screen</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-round" data-guide-target="guide-round"><span>Step 3: Play a round and enter the scores</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-standings" data-guide-target="guide-standings"><span>Step 4: Read the standings</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-fix" data-guide-target="guide-fix"><span>Step 5: Fix a mistake</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-rotation" data-guide-target="guide-rotation"><span>Who starts each round</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-ending" data-guide-target="guide-ending"><span>Step 6: The last round and the results</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-newgame" data-guide-target="guide-newgame"><span>Step 7: Start another game</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-history" data-guide-target="guide-history"><span>Player History</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-tips" data-guide-target="guide-tips"><span>Tips and answers to common questions</span><span aria-hidden="true">&rsaquo;</span></a>
+      </nav>
+      <section class="guide-section" id="guide-welcome"><h2 class="display">What this app does</h2>
+<p>SWOOP Scorekeeper keeps score for the SWOOP card game. It records every round, keeps a running total for each player, shows who is winning, and remembers each player&#x27;s wins and losses from game to game.</p>
+<p>In SWOOP the lowest score wins, so a smaller number is better. The app does all of the adding up for you.</p>
+<ul class="guide-list"><li>Set up the players and decide how the game will end.</li><li>After every round, tap who won the round and enter everyone else&#x27;s leftover points.</li><li>Watch the standings update, then see the winner when the game ends.</li></ul>
+</section>
+<section class="guide-section" id="guide-scoring"><h2 class="display">How scoring works</h2>
+<p>When a round ends, the player who went out first (the round winner) scores 0. Every other player adds up the points on all of the cards they still hold: cards in their Hand, cards on their Board, and any face-down Mystery cards.</p>
+<ul class="guide-list"><li>Number cards 1 through 9: 5 points each</li><li>Number cards 10, 11 and 12: 10 points each</li><li>SWOOP cards: 50 points each</li></ul>
+<div class="guide-tip"><span aria-hidden="true">&#128161;</span><span>Example: a player is left holding a 10, a 5, two 8s, a SWOOP card and an 11. That is 10 + 5 + 5 + 5 + 50 + 10 = 85 points. That player enters 85.</span></div>
+<p>Each round&#x27;s points are added to every player&#x27;s running total. When the game ends, the lowest total wins.</p>
+</section>
+<section class="guide-section" id="guide-start"><h2 class="display">Step 1: Start a game</h2>
+<p>Everything begins on the home screen. Fill in the form from top to bottom, then tap Start Game.</p>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-01-setup-top.jpg" alt="The top of the home screen" loading="lazy"><figcaption>The top of the home screen</figcaption></div><ol class="guide-callouts"><li>Player History: opens the win and loss record for everyone who has finished a game (see &quot;Player History&quot; below).</li><li>How many players? Use the minus and plus buttons to choose from 2 to 12 players.</li><li>Player names: type one name per seat, in seating order going clockwise around the table. Each name is capitalized for you.</li></ol></figure>
+<ul class="guide-list"><li>Every player needs a name, and no two names can be the same.</li><li>Spell each person&#x27;s name the same way every game. Player History matches people by name (capital letters don&#x27;t matter).</li></ul>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-02-setup-bottom.jpg" alt="The bottom of the home screen" loading="lazy"><figcaption>The bottom of the home screen</figcaption></div><ol class="guide-callouts"><li>Who starts the first round? Pick the player who drew the lowest card. If you haven&#x27;t drawn yet, leave it for now. You can change it on the game screen before round 1.</li><li>How does the game end? Choose one of three ways (explained below).</li><li>Start Game: begins the game. If something is missing you&#x27;ll see a red message telling you what to fix.</li><li>How to use this app: opens this guide at any time.</li></ol></figure>
+<p>The three ways a game can end:</p>
+<ul class="guide-list"><li>Once Around the Table: the game is over after every player has started one round. A 4-player game lasts 4 rounds.</li><li>Predetermined Score: you choose a target. The game ends at the end of the round in which any player&#x27;s total reaches it.</li><li>Fixed Number of Rounds: you choose how many rounds to play, and the game ends after that many, no matter the scores.</li></ul>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-03-setup-target.jpg" alt="Choosing Predetermined Score" loading="lazy"><figcaption>Choosing Predetermined Score</figcaption></div><ol class="guide-callouts"><li>Tap Predetermined Score. (Fixed Number of Rounds works the same way, with a box for how many rounds to play.)</li><li>Type your target in the box that appears. The app suggests a range based on the number of players: 350 to 500 points for 3 to 5 players, 250 to 350 points for 6 or more.</li></ol></figure>
+</section>
+<section class="guide-section" id="guide-screen"><h2 class="display">Step 2: The game screen</h2>
+<p>After you tap Start Game you arrive at the game screen. This is where you will spend the whole game.</p>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-04-game-start.jpg" alt="The game screen at the start of round 1" loading="lazy"><figcaption>The game screen at the start of round 1</figcaption></div><ol class="guide-callouts"><li>The title shows which round you are on. When the game ends it changes to Game Over.</li><li>History opens the Player History table. New Game ends the current game and returns to the home screen.</li><li>Progress chip: shows how far along the game is, such as &quot;Once Around: 0 / 4 rounds&quot;, &quot;Round 2 / 8&quot; or &quot;Target 100 pts&quot;.</li><li>Who starts: shows who starts the round. Before the first round has been entered you can tap it to move to the next player, until it matches who really drew the lowest card.</li><li>The scoreboard: one column for each player, with a Total row at the bottom. It fills in as rounds are entered.</li><li>The entry panel: this is where you record each round (next step).</li></ol></figure>
+</section>
+<section class="guide-section" id="guide-round"><h2 class="display">Step 3: Play a round and enter the scores</h2>
+<p>Play the round of SWOOP as usual. When someone goes out, the round is over. Recording it takes two quick steps.</p>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-05-winner-picked.jpg" alt="Step 1: tap who won the round" loading="lazy"><figcaption>Step 1: tap who won the round</figcaption></div><ol class="guide-callouts"><li>Tap the name of the first player to go out. A check mark appears and the button turns solid red.</li><li>That player&#x27;s row turns gold and shows &quot;won the round, 0 pts&quot;. The round winner always scores 0, so there is nothing to type for them.</li></ol></figure>
+<p>Until you choose a winner, the point boxes in step 2 stay dimmed. If you tap the wrong player, just tap the right one. The selection moves.</p>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-06-scores-typed.jpg" alt="Step 2: enter everyone else&#x27;s points" loading="lazy"><figcaption>Step 2: enter everyone else&#x27;s points</figcaption></div><ol class="guide-callouts"><li>Tap each player&#x27;s box and type the total points on the cards they have left. A number pad appears. The Next key moves to the following player and Done closes the keyboard.</li><li>Tap Next Round to save the round. The scoreboard updates and the entry panel clears, ready for the next round.</li></ol></figure>
+<ul class="guide-list"><li>Every player other than the winner needs a number. If someone has no points left, enter 0.</li><li>Points must be whole numbers, 0 or higher.</li><li>If a box is empty or isn&#x27;t a valid number you&#x27;ll see a red message, and nothing is saved until it is fixed.</li></ul>
+<div class="guide-tip"><span aria-hidden="true">&#128161;</span><span>The players in the entry panel always stay in seating order, so you can enter scores by going around the table.</span></div>
+</section>
+<section class="guide-section" id="guide-standings"><h2 class="display">Step 4: Read the standings</h2>
+<p>Once a round has been recorded, the scoreboard shows the results.</p>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-07-after-rounds.jpg" alt="The scoreboard after two rounds" loading="lazy"><figcaption>The scoreboard after two rounds</figcaption></div><ol class="guide-callouts"><li>Columns are sorted by running total, lowest first, so the player in the lead is always the first column. Players who are tied stay in seating order.</li><li>The gold crown marks the leader, and the gold chip at the top names them (&quot;Casey leads&quot;). If two or more players share the lowest total it says &quot;Tied for the lead&quot;.</li><li>&quot;0 (out)&quot; marks the player who won that round. Everyone else&#x27;s points for the round are shown in their column.</li><li>The Total row is each player&#x27;s running total. Remember that lowest is best.</li><li>Tap the small &quot;edit&quot; link next to a round number to correct that round (see the next step).</li></ol></figure>
+</section>
+<section class="guide-section" id="guide-fix"><h2 class="display">Step 5: Fix a mistake</h2>
+<p>Typed the wrong number, or picked the wrong winner? You can correct any round at any time.</p>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-08-edit-round.jpg" alt="Editing a round" loading="lazy"><figcaption>Editing a round</figcaption></div><ol class="guide-callouts"><li>Tap the small &quot;edit&quot; link next to a round number in the scoreboard. The entry panel changes to &quot;Edit Round&quot; for that round.</li><li>That round&#x27;s winner and points are filled in. Tap a different winner or change any number that is wrong.</li><li>Tap Save Round to apply the change, or Cancel to leave the round as it was.</li></ol></figure>
+<ul class="guide-list"><li>Totals, the standings and the leader are recalculated immediately.</li><li>You can edit a round even after the game is over. If the correction means the game isn&#x27;t over after all, it reopens so you can keep playing.</li></ul>
+</section>
+<section class="guide-section" id="guide-rotation"><h2 class="display">Who starts each round</h2>
+<p>In SWOOP the start of play moves one seat clockwise every round. The app follows the order of the names you entered, so the next starter is simply the next name down the list, wrapping back to the first name after the last.</p>
+<p>That is why you enter names in seating order, and why Once Around the Table lasts exactly one round per player. You only need to tell the app who starts round 1.</p>
+</section>
+<section class="guide-section" id="guide-ending"><h2 class="display">Step 6: The last round and the results</h2>
+<p>The app tells you when the round you are about to record will end the game.</p>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-09-last-round.jpg" alt="The final round" loading="lazy"><figcaption>The final round</figcaption></div><ol class="guide-callouts"><li>The progress chip shows 3 of 4 rounds done, so this is the last one.</li><li>The button now says See Game Results instead of Next Round. In a Predetermined Score game it changes as you type, the moment the scores entered would push someone to the target.</li></ol></figure>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-10-game-over.jpg" alt="The game is over" loading="lazy"><figcaption>The game is over</figcaption></div><ol class="guide-callouts"><li>The title changes to Game Over. The scoreboard stays on screen so everyone can see the final totals.</li><li>The winner is shown with the lowest total. If two or more players tie for the lowest, all of their names are shown and it says &quot;tie with the lowest score&quot;.</li><li>Tap New Game when you are ready to play again.</li></ol></figure>
+</section>
+<section class="guide-section" id="guide-newgame"><h2 class="display">Step 7: Start another game</h2>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-11-new-game.jpg" alt="Starting a new game" loading="lazy"><figcaption>Starting a new game</figcaption></div><ol class="guide-callouts"><li>Tap New Game at the top of the game screen. The app asks you to confirm so you can&#x27;t clear a game by accident.</li><li>Choose New Game to continue, or Cancel to go back.</li></ol></figure>
+<ul class="guide-list"><li>A finished game is added to Player History when you start a new game.</li><li>A game you abandon before it ends is not counted, so unfinished games never affect anyone&#x27;s record.</li></ul>
+</section>
+<section class="guide-section" id="guide-history"><h2 class="display">Player History</h2>
+<p>The app keeps a record for every player across all of the games you finish. Open it from the Player History link on the home screen, or the History button on the game screen.</p>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-12-history.jpg" alt="Player History" loading="lazy"><figcaption>Player History</figcaption></div><ol class="guide-callouts"><li>One row per player, in alphabetical order, showing games Played, Won and Lost, and the Last Score from their most recent finished game.</li><li>Clear History erases everyone&#x27;s record after asking you to confirm. This cannot be undone.</li><li>Close returns to where you were.</li></ol></figure>
+<ul class="guide-list"><li>If players tie for the lowest score, every tied player is credited with a win.</li><li>Players are matched by name, ignoring capital letters, so &quot;sam&quot; and &quot;Sam&quot; are the same person.</li></ul>
+</section>
+<section class="guide-section" id="guide-tips"><h2 class="display">Tips and answers to common questions</h2>
+<ul class="guide-list"><li>Is my game saved? Yes. The current game and Player History save automatically after every change, so you can close the app or lock your device and come back to it.</li><li>Can I change a player&#x27;s name or add a player mid-game? No. Names and the number of players are fixed once a game starts. Start a new game if you need to change them.</li><li>Can I change how the game ends mid-game? No, it is set when the game starts.</li><li>Did I enter a round for the wrong game? Use the edit link to correct it, or tap New Game and start again. An unfinished game doesn&#x27;t affect Player History.</li><li>Are my scores shared with other devices? No. Each device keeps its own games and history.</li></ul>
+<ul class="guide-list"><li>Add it to your home screen: in Safari tap the Share button, then Add to Home Screen. It opens full screen like an app.</li><li>The web version and the iPhone/iPad app keep separate histories.</li></ul>
+</section>
+      <button type="button" class="btn" id="btn-close-guide-bottom">Done</button>
+    </div>
+  </section>
+  <!-- GUIDE:END -->
 
   <!-- ===================== GAME SCREEN ===================== -->
   <section id="screen-game" class="screen">
@@ -1091,7 +1354,30 @@
   function showScreen(name) {
     document.getElementById("screen-setup").classList.toggle("active", name === "setup");
     document.getElementById("screen-game").classList.toggle("active", name === "game");
+    document.getElementById("screen-guide").classList.toggle("active", name === "guide");
   }
+
+  // GUIDE-JS:START
+  document.getElementById("btn-open-guide").addEventListener("click", function () {
+    showScreen("guide");
+    window.scrollTo(0, 0);
+  });
+
+  function closeGuide() {
+    showScreen("setup");
+    window.scrollTo(0, 0);
+  }
+  document.getElementById("btn-close-guide").addEventListener("click", closeGuide);
+  document.getElementById("btn-close-guide-bottom").addEventListener("click", closeGuide);
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-guide-target]"), function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      var target = document.getElementById(link.getAttribute("data-guide-target"));
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+  // GUIDE-JS:END
 
   // ---------- game screen rendering ----------
 
