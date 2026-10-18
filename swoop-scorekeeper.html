@@ -435,6 +435,22 @@
 
   table.scoreboard th.player-col.is-leader { color: var(--gold); }
 
+  table.scoreboard thead th { vertical-align: top; }
+
+  table.scoreboard th.player-col.is-starter {
+    background: color-mix(in srgb, var(--accent) 14%, var(--panel-soft));
+  }
+
+  .starter-tag {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.5rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    white-space: nowrap;
+    color: var(--accent);
+  }
+
   .player-name-cell {
     display: flex;
     align-items: center;
@@ -1029,7 +1045,7 @@
 </section>
 <section class="guide-section" id="guide-screen"><h2 class="display">Step 2: The game screen</h2>
 <p>After you tap Start Game you arrive at the game screen. This is where you will spend the whole game.</p>
-<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-04-game-start.jpg" alt="The game screen at the start of round 1" loading="lazy"><figcaption>The game screen at the start of round 1</figcaption></div><ol class="guide-callouts"><li>The title shows which round you are on. When the game ends it changes to Game Over.</li><li>The ? button opens this guide, History opens the Player History table, and New Game ends the current game and returns to the home screen.</li><li>Progress chip: shows how far along the game is, such as &quot;Once Around: 0 / 4 rounds&quot;, &quot;Round 2 / 8&quot; or &quot;Target 100 pts&quot;.</li><li>Who starts: shows who starts the round. Before the first round has been entered you can tap it to move to the next player, until it matches who really drew the lowest card.</li><li>The scoreboard: one column for each player, with a Total row at the bottom. It fills in as rounds are entered.</li><li>The entry panel: this is where you record each round (next step).</li></ol></figure>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-04-game-start.jpg" alt="The game screen at the start of round 1" loading="lazy"><figcaption>The game screen at the start of round 1</figcaption></div><ol class="guide-callouts"><li>The title shows which round you are on. When the game ends it changes to Game Over.</li><li>The ? button opens this guide, History opens the Player History table, and New Game ends the current game and returns to the home screen.</li><li>Progress chip: shows how far along the game is, such as &quot;Once Around: 0 / 4 rounds&quot;, &quot;Round 2 / 8&quot; or &quot;Target 100 pts&quot;.</li><li>Who starts: shows who goes first this round. Before the first round has been entered you can tap it to move to the next player, until it matches who really drew the lowest card. After that it moves to the next player on its own every round.</li><li>The scoreboard: one column for each player, with a Total row at the bottom. The player who goes first this round has a red &quot;STARTS&quot; tag over their column. It fills in as rounds are entered.</li><li>The entry panel: this is where you record each round (next step).</li></ol></figure>
 </section>
 <section class="guide-section" id="guide-round"><h2 class="display">Step 3: Play a round and enter the scores</h2>
 <p>Play the round of SWOOP as usual. When someone goes out, the round is over. Recording it takes two quick steps.</p>
@@ -1041,7 +1057,7 @@
 </section>
 <section class="guide-section" id="guide-standings"><h2 class="display">Step 4: Read the standings</h2>
 <p>Once a round has been recorded, the scoreboard shows the results.</p>
-<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-07-after-rounds.jpg" alt="The scoreboard after two rounds" loading="lazy"><figcaption>The scoreboard after two rounds</figcaption></div><ol class="guide-callouts"><li>Columns are sorted by running total, lowest first, so the player in the lead is always the first column. Players who are tied stay in seating order.</li><li>The gold crown marks the leader, and the gold chip at the top names them (&quot;Casey leads&quot;). If two or more players share the lowest total it says &quot;Tied for the lead&quot;.</li><li>&quot;0 (out)&quot; marks the player who won that round. Everyone else&#x27;s points for the round are shown in their column.</li><li>The Total row is each player&#x27;s running total. Remember that lowest is best.</li><li>Tap the small &quot;edit&quot; link next to a round number to correct that round (see the next step).</li></ol></figure>
+<figure class="guide-figure"><div class="guide-shot"><img src="guide/guide-07-after-rounds.jpg" alt="The scoreboard after two rounds" loading="lazy"><figcaption>The scoreboard after two rounds</figcaption></div><ol class="guide-callouts"><li>Columns are sorted by running total, lowest first, so the player in the lead is always the first column. Players who are tied stay in seating order.</li><li>The gold crown marks the leader, and the gold chip at the top names them (&quot;Casey leads&quot;). If two or more players share the lowest total it says &quot;Tied for the lead&quot;.</li><li>&quot;0 (out)&quot; marks the player who won that round. Everyone else&#x27;s points for the round are shown in their column.</li><li>The Total row is each player&#x27;s running total. Remember that lowest is best.</li><li>Tap the small &quot;edit&quot; link next to a round number to correct that round (see the next step).</li><li>The &quot;Casey starts&quot; chip and the red &quot;STARTS&quot; tag over Casey&#x27;s column show who goes first in the next round.</li></ol></figure>
 </section>
 <section class="guide-section" id="guide-fix"><h2 class="display">Step 5: Fix a mistake</h2>
 <p>Typed the wrong number, or picked the wrong winner? You can correct any round at any time.</p>
@@ -1051,6 +1067,7 @@
 <section class="guide-section" id="guide-rotation"><h2 class="display">Who starts each round</h2>
 <p>In SWOOP the start of play moves one seat clockwise every round. The app follows the order of the names you entered, so the next starter is simply the next name down the list, wrapping back to the first name after the last.</p>
 <p>That is why you enter names in seating order, and why Once Around the Table lasts exactly one round per player. You only need to tell the app who starts round 1.</p>
+<p>The game screen always shows who goes first in the current round, in two places: the &quot;starts&quot; chip at the top of the screen, and a red &quot;STARTS&quot; tag over that player&#x27;s column in the scoreboard. When you record a round, both move to the next person automatically. The columns are sorted by score, so the tag is the quickest way to spot whose turn it is to go first.</p>
 </section>
 <section class="guide-section" id="guide-ending"><h2 class="display">Step 6: The last round and the results</h2>
 <p>The app tells you when the round you are about to record will end the game.</p>
@@ -1436,6 +1453,11 @@
         renderGame();
       });
       feltMetaEl.appendChild(starterChip);
+    } else if (!gameOver) {
+      var startsChip = document.createElement("span");
+      startsChip.className = "chip";
+      startsChip.textContent = "\u25B6 " + state.players[currentStarterIndex()] + " starts";
+      feltMetaEl.appendChild(startsChip);
     }
 
     if (leaders.length && state.rounds.length > 0) {
@@ -1449,9 +1471,13 @@
     }
 
     // table head
+    var starterIdx = gameOver ? -1 : currentStarterIndex();
     scoreboardHead.innerHTML = "<th>Round</th>" + displayOrder.map(function (i) {
       var isLead = leaders.indexOf(i) !== -1 && state.rounds.length > 0;
-      return '<th class="player-col' + (isLead ? " is-leader" : "") + '">' + escapeHtml(state.players[i]) + (isLead ? " &#9819;" : "") + '</th>';
+      var isStarter = i === starterIdx;
+      return '<th class="player-col' + (isLead ? " is-leader" : "") + (isStarter ? " is-starter" : "") + '">' +
+        escapeHtml(state.players[i]) + (isLead ? " &#9819;" : "") +
+        (isStarter ? '<span class="starter-tag">&#9654; STARTS</span>' : "") + '</th>';
     }).join("");
 
     // table body
