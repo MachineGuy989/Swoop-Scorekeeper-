@@ -786,6 +786,19 @@
     font-weight: 800;
   }
 
+  .guide-link { color: var(--accent); font-weight: 700; text-decoration: none; }
+  .guide-link:hover { text-decoration: underline; }
+
+  .legal-note {
+    margin: 4px 4px 0;
+    text-align: center;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .legal-note a { color: var(--accent); font-weight: 700; text-decoration: none; }
+  .legal-note a:hover { text-decoration: underline; }
+
   #screen-guide { background: var(--bg); }
 
   .guide-top {
@@ -1009,6 +1022,9 @@
       </div>
 
       <button type="button" class="guide-button" id="btn-open-guide"><span class="q" aria-hidden="true">?</span><span>How to use this app</span></button>
+      <!-- LEGAL:START -->
+      <p class="legal-note">SWOOP Scorekeeper is an independent scorekeeping tool. It is not affiliated with, endorsed by, or sponsored by Mukanāna Games. SWOOP is a trademark of Mukanāna Games.<br><a href="https://swoop-cards.com" target="_blank" rel="noopener noreferrer">Get the SWOOP card game at swoop-cards.com &#8599;</a></p>
+      <!-- LEGAL:END -->
     </div>
   </section>
 
@@ -1021,7 +1037,7 @@
     <div class="guide-body">
       <nav class="guide-contents" aria-label="Guide contents">
         <div class="field-label">In this guide</div>
-        <a href="#guide-welcome" data-guide-target="guide-welcome"><span>What this app does</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-scoring" data-guide-target="guide-scoring"><span>How scoring works</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-start" data-guide-target="guide-start"><span>Step 1: Start a game</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-screen" data-guide-target="guide-screen"><span>Step 2: The game screen</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-round" data-guide-target="guide-round"><span>Step 3: Play a round and enter the scores</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-standings" data-guide-target="guide-standings"><span>Step 4: Read the standings</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-fix" data-guide-target="guide-fix"><span>Step 5: Fix a mistake</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-rotation" data-guide-target="guide-rotation"><span>Who starts each round</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-ending" data-guide-target="guide-ending"><span>Step 6: The last round and the results</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-newgame" data-guide-target="guide-newgame"><span>Step 7: Start another game</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-history" data-guide-target="guide-history"><span>Player History</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-tips" data-guide-target="guide-tips"><span>Tips and answers to common questions</span><span aria-hidden="true">&rsaquo;</span></a>
+        <a href="#guide-welcome" data-guide-target="guide-welcome"><span>What this app does</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-scoring" data-guide-target="guide-scoring"><span>How scoring works</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-start" data-guide-target="guide-start"><span>Step 1: Start a game</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-screen" data-guide-target="guide-screen"><span>Step 2: The game screen</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-round" data-guide-target="guide-round"><span>Step 3: Play a round and enter the scores</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-standings" data-guide-target="guide-standings"><span>Step 4: Read the standings</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-fix" data-guide-target="guide-fix"><span>Step 5: Fix a mistake</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-rotation" data-guide-target="guide-rotation"><span>Who starts each round</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-ending" data-guide-target="guide-ending"><span>Step 6: The last round and the results</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-newgame" data-guide-target="guide-newgame"><span>Step 7: Start another game</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-history" data-guide-target="guide-history"><span>Player History</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-tips" data-guide-target="guide-tips"><span>Tips and answers to common questions</span><span aria-hidden="true">&rsaquo;</span></a><a href="#guide-about" data-guide-target="guide-about"><span>About this app</span><span aria-hidden="true">&rsaquo;</span></a>
       </nav>
       <section class="guide-section" id="guide-welcome"><h2 class="display">What this app does</h2>
 <p>SWOOP Scorekeeper keeps score for the SWOOP card game. It records every round, keeps a running total for each player, shows who is winning, and remembers each player&#x27;s wins and losses from game to game.</p>
@@ -1086,6 +1102,11 @@
 <section class="guide-section" id="guide-tips"><h2 class="display">Tips and answers to common questions</h2>
 <ul class="guide-list"><li>Is my game saved? Yes. The current game and Player History save automatically after every change, so you can close the app or lock your device and come back to it.</li><li>Can I change a player&#x27;s name or add a player mid-game? No. Names and the number of players are fixed once a game starts. Start a new game if you need to change them.</li><li>Can I change how the game ends mid-game? No, it is set when the game starts.</li><li>Did I enter a round for the wrong game? Use the edit link to correct it, or tap New Game and start again. An unfinished game doesn&#x27;t affect Player History.</li><li>Are my scores shared with other devices? No. Each device keeps its own games and history.</li></ul>
 <ul class="guide-list"><li>Add it to your home screen: in Safari tap the Share button, then Add to Home Screen. It opens full screen like an app.</li><li>The web version and the iPhone/iPad app keep separate histories.</li></ul>
+</section>
+<section class="guide-section" id="guide-about"><h2 class="display">About this app</h2>
+<p>SWOOP Scorekeeper is an independent scorekeeping tool. It is not affiliated with, endorsed by, or sponsored by Mukanāna Games. SWOOP is a trademark of Mukanāna Games.</p>
+<p>The app contains none of the game&#x27;s card artwork or logos. You need the SWOOP card game itself to play, and it is made by Mukanāna Games.</p>
+<p><a class="guide-link" href="https://swoop-cards.com" target="_blank" rel="noopener noreferrer">Get the SWOOP card game at swoop-cards.com &#8599;</a></p>
 </section>
       <button type="button" class="btn" id="btn-close-guide-bottom">Done</button>
     </div>
